@@ -11,7 +11,7 @@ Reorganize the project into the following modular Next.js directory layout:
   - `globals.css` (Reset styles & mobile touch handling)
   - `api/` *(Add route handlers here only if the app requires server-side API calls, e.g. proxying secrets or webhook receivers. Omit otherwise.)*
 - `components/`
-  - `TopBanner.jsx` (Header sponsorship banner matching YOUR_REFERENCE_SITE)
+  - `TopBanner.jsx` (Header sponsorship banner — see Section 4 for personalisation)
 - `public/` (Static assets: images, audio, icons)
 - `.env.local` / `.env.example` (Secret & environment management)
 - `.gitignore` (OS, build, and dependency exclusion file)
@@ -51,9 +51,10 @@ html, body {
 
 ### 4. UI Components, Assets & Analytics Integration
 - **Top Banner (`components/TopBanner.jsx`):**
-  - Replicate the banner from `https://YOUR_REFERENCE_SITE/`:
-    > *"Hi, I am YOUR_NAME, the creator of this website :) If you are interested to sponsor it, please feel free to contact me here ❤️"*
-  - Implement fixed/sticky positioning at the top with responsive padding. Ensure all external links include `target="_blank"` and `rel="noopener noreferrer"`.
+  - Create a fixed/sticky banner at the top of the page with the following text (customise the placeholders):
+    > *"Hi, I am [YOUR_NAME], the creator of this website :) If you are interested to sponsor it, please feel free to contact me here ❤️"*
+  - Replace `[YOUR_NAME]` with your name. Optionally, match the layout and link style of an existing reference site at `https://[YOUR_REFERENCE_SITE]/`.
+  - Implement fixed/sticky positioning with responsive padding. All external links must include `target="_blank"` and `rel="noopener noreferrer"`.
 - **Favicon & Metadata:**
   - Configure a pumpkin favicon in `app/layout.jsx` via the App Router Metadata API using an inline SVG data URI or graphic file.
 - **Vercel Analytics:**
