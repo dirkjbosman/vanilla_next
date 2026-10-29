@@ -52,8 +52,8 @@ html, body {
 ### 4. UI Components, Assets & Analytics Integration
 - **Top Banner (`components/TopBanner.jsx`):**
   - Create a fixed/sticky banner at the top of the page with the following text (customise the placeholders):
-    > *"Hi, I am [YOUR_NAME], the creator of this website :) If you are interested to sponsor it, please feel free to contact me here ❤️"*
-  - The word "here" must be an anchor tag linking to `[YOUR_CONTACT_URL]` (e.g. an X/Twitter profile, email `mailto:`, or any contact page) with `target="_blank"` and `rel="noopener noreferrer"`.
+    > *"Hi, I am [YOUR_NAME], the creator of this website :) If you are interested to sponsor it, please feel free to contact me [YOUR_CONTACT_URL] ❤️"*
+  - `[YOUR_CONTACT_URL]` must be a hyperlink — the link text is the URL itself (e.g. an X/Twitter handle, email address, or contact page URL) with `target="_blank"` and `rel="noopener noreferrer"`.
   - Replace `[YOUR_NAME]` with your name, `[YOUR_CONTACT_URL]` with your contact link, and optionally match the layout and link style of an existing reference site at `https://[YOUR_REFERENCE_SITE]/`.
   - Implement fixed/sticky positioning with responsive padding. All external links must include `target="_blank"` and `rel="noopener noreferrer"`.
 - **Favicon & Metadata:**
