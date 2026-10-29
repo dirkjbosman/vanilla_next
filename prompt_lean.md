@@ -4,8 +4,9 @@ Convert this Vanilla JS app into a Next.js (App Router) project ready for Vercel
 1. Logic & Controllers: Translate DOM manipulation, game loops, and event listeners into React hooks (`useRef`, `useEffect`, `useState`). Do NOT alter core application algorithms or business logic. Ensure mobile touch controls (`touchstart`, `touchend`) maintain state identically without input delay or viewport zooming (`touch-action: manipulation`).
 2. Top Banner Component (`components/TopBanner.jsx`):
    - Text: "Hi, I am [YOUR_NAME], the creator of this website :) If you are interested to sponsor it, please feel free to contact me here ❤️"
+   - The word "here" must be a hyperlink pointing to `[YOUR_CONTACT_URL]` (e.g. your X/Twitter profile, email mailto, or any contact page) with `target="_blank"` and `rel="noopener noreferrer"`.
    - Match layout, links, and styling of https://[YOUR_REFERENCE_SITE]/ (all links with `target="_blank"` and `rel="noopener noreferrer"`).
-   - Replace `[YOUR_NAME]` with your name and `[YOUR_REFERENCE_SITE]` with a live site URL to match the banner style from.
+   - Replace `[YOUR_NAME]` with your name, `[YOUR_CONTACT_URL]` with your contact link, and `[YOUR_REFERENCE_SITE]` with a live site URL to match the banner style from.
 3. Root Layout (`app/layout.jsx`):
    - Export metadata with pumpkin favicon: `export const metadata = { title: 'App', icons: { icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎃</text></svg>" } }`.
    - Render `<TopBanner />` at top of `<body>`.

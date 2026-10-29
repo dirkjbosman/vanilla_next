@@ -53,7 +53,8 @@ html, body {
 - **Top Banner (`components/TopBanner.jsx`):**
   - Create a fixed/sticky banner at the top of the page with the following text (customise the placeholders):
     > *"Hi, I am [YOUR_NAME], the creator of this website :) If you are interested to sponsor it, please feel free to contact me here ❤️"*
-  - Replace `[YOUR_NAME]` with your name. Optionally, match the layout and link style of an existing reference site at `https://[YOUR_REFERENCE_SITE]/`.
+  - The word "here" must be an anchor tag linking to `[YOUR_CONTACT_URL]` (e.g. an X/Twitter profile, email `mailto:`, or any contact page) with `target="_blank"` and `rel="noopener noreferrer"`.
+  - Replace `[YOUR_NAME]` with your name, `[YOUR_CONTACT_URL]` with your contact link, and optionally match the layout and link style of an existing reference site at `https://[YOUR_REFERENCE_SITE]/`.
   - Implement fixed/sticky positioning with responsive padding. All external links must include `target="_blank"` and `rel="noopener noreferrer"`.
 - **Favicon & Metadata:**
   - Configure a pumpkin favicon in `app/layout.jsx` via the App Router Metadata API using an inline SVG data URI or graphic file.
