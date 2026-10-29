@@ -9,7 +9,7 @@ A collection of Claude Code prompts for converting Vanilla JS apps into producti
 | File | Purpose | Token Cost |
 |------|---------|------------|
 | [`prompt_lean.md`](./prompt_lean.md) | Quick conversion — minimal output, essentials only | Low |
-| [`prompt_long.md`](./prompt_long.md) | Thorough conversion — full architecture, step-by-step, all files | High |
+| [`prompt_full.md`](./prompt_full.md) | Thorough conversion — full architecture, step-by-step, all files | High |
 
 Both prompts produce:
 - Next.js App Router structure (`app/`, `components/`, `public/`)
@@ -30,7 +30,7 @@ The fastest way to use these prompts across any project is a **one-time global s
 ```bash
 mkdir -p ~/.claude/commands
 ln -sf /path/to/vanilla_next/prompt_lean.md ~/.claude/commands/to-nextjs-lean.md
-ln -sf /path/to/vanilla_next/prompt_long.md ~/.claude/commands/to-nextjs-full.md
+ln -sf /path/to/vanilla_next/prompt_full.md ~/.claude/commands/to-nextjs-full.md
 ```
 
 Then from any vanilla JS project, open Claude Code and type:
@@ -55,7 +55,7 @@ Store the commands inside a specific project's `.claude/commands/` folder.
 ```bash
 mkdir -p .claude/commands
 cp /path/to/prompt_lean.md .claude/commands/to-nextjs-lean.md
-cp /path/to/prompt_long.md .claude/commands/to-nextjs-full.md
+cp /path/to/prompt_full.md .claude/commands/to-nextjs-full.md
 ```
 
 **Usage:** type `/to-nextjs-lean` or `/to-nextjs-full` inside Claude Code for that project.
@@ -69,14 +69,14 @@ Same as Option 1 but stored globally — available in every Claude Code session 
 ```bash
 mkdir -p ~/.claude/commands
 cp /path/to/prompt_lean.md ~/.claude/commands/to-nextjs-lean.md
-cp /path/to/prompt_long.md ~/.claude/commands/to-nextjs-full.md
+cp /path/to/prompt_full.md ~/.claude/commands/to-nextjs-full.md
 ```
 
 Use symlinks instead of `cp` to stay in sync with this repo automatically:
 
 ```bash
 ln -sf /path/to/vanilla_next/prompt_lean.md ~/.claude/commands/to-nextjs-lean.md
-ln -sf /path/to/vanilla_next/prompt_long.md ~/.claude/commands/to-nextjs-full.md
+ln -sf /path/to/vanilla_next/prompt_full.md ~/.claude/commands/to-nextjs-full.md
 ```
 
 ---
@@ -88,7 +88,7 @@ Add a block to the `CLAUDE.md` of any vanilla JS project. Claude reads it automa
 ```markdown
 ## Conversion Target
 This project is pending conversion to Next.js for Vercel deployment.
-When asked to convert, follow the instructions in `prompt_lean.md` (quick) or `prompt_long.md` (thorough).
+When asked to convert, follow the instructions in `prompt_lean.md` (quick) or `prompt_full.md` (thorough).
 ```
 
 Then just say *"Convert this."* — no slash command needed.
@@ -102,7 +102,7 @@ For headless use or terminal-first workflows.
 **Add to `~/.zshrc` or `~/.bashrc`:**
 ```bash
 alias convert-lean='cat /path/to/prompt_lean.md | claude --print'
-alias convert-full='cat /path/to/prompt_long.md | claude --print'
+alias convert-full='cat /path/to/prompt_full.md | claude --print'
 ```
 
 Or as a script:
@@ -116,7 +116,7 @@ echo "Done. Output written to conversion_output.md"
 
 ```bash
 ./convert-to-next.sh prompt_lean
-./convert-to-next.sh prompt_long
+./convert-to-next.sh prompt_full
 ```
 
 ---
@@ -168,7 +168,7 @@ server.setRequestHandler("tools/list", async () => ({
 }));
 
 server.setRequestHandler("tools/call", async (req) => {
-  const file = req.params.name === "convert_lean" ? "prompt_lean.md" : "prompt_long.md";
+  const file = req.params.name === "convert_lean" ? "prompt_lean.md" : "prompt_full.md";
   return { content: [{ type: "text", text: fs.readFileSync(file, "utf8") }] };
 });
 ```
@@ -224,7 +224,7 @@ Push your vanilla project to the `convert-to-next` branch and the output lands a
 Both prompts include a `[YOUR_NAME]` and `[YOUR_REFERENCE_SITE]` placeholder in the TopBanner instructions. Replace these in the prompt files before running a conversion, or edit the generated component directly afterwards.
 
 ### `api/` Route Handlers
-The `prompt_long.md` prompt lists `app/api/` as optional. Omit it unless the app requires server-side logic (proxying secrets, webhook receivers, server-sent events). When listed unnecessarily, models sometimes generate empty placeholder files.
+The `prompt_full.md` prompt lists `app/api/` as optional. Omit it unless the app requires server-side logic (proxying secrets, webhook receivers, server-sent events). When listed unnecessarily, models sometimes generate empty placeholder files.
 
 ---
 
