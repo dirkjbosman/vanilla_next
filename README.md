@@ -60,12 +60,12 @@ The fastest way to use these prompts across any project is a **one-time global s
 mkdir -p ~/.claude/commands
 
 # v2n (Vanilla → Next.js)
-ln -sf /path/to/vanilla_next/v2n/prompt_lean.md ~/.claude/commands/to-nextjs-lean.md
-ln -sf /path/to/vanilla_next/v2n/prompt_full.md ~/.claude/commands/to-nextjs-full.md
+ln -sf ~/Github_Dirk/vanilla_next/v2n/prompt_lean.md ~/.claude/commands/to-nextjs-lean.md
+ln -sf ~/Github_Dirk/vanilla_next/v2n/prompt_full.md ~/.claude/commands/to-nextjs-full.md
 
 # n2v (Next.js → Vanilla)
-ln -sf /path/to/vanilla_next/n2v/prompt_lean.md ~/.claude/commands/to-vanilla-lean.md
-ln -sf /path/to/vanilla_next/n2v/prompt_full.md ~/.claude/commands/to-vanilla-full.md
+ln -sf ~/Github_Dirk/vanilla_next/n2v/prompt_lean.md ~/.claude/commands/to-vanilla-lean.md
+ln -sf ~/Github_Dirk/vanilla_next/n2v/prompt_full.md ~/.claude/commands/to-vanilla-full.md
 ```
 
 Then from any project, open Claude Code and type:
@@ -96,12 +96,12 @@ Store the commands inside a specific project's `.claude/commands/` folder.
 mkdir -p .claude/commands
 
 # v2n
-cp /path/to/vanilla_next/v2n/prompt_lean.md .claude/commands/to-nextjs-lean.md
-cp /path/to/vanilla_next/v2n/prompt_full.md .claude/commands/to-nextjs-full.md
+cp ~/Github_Dirk/vanilla_next/v2n/prompt_lean.md .claude/commands/to-nextjs-lean.md
+cp ~/Github_Dirk/vanilla_next/v2n/prompt_full.md .claude/commands/to-nextjs-full.md
 
 # n2v
-cp /path/to/vanilla_next/n2v/prompt_lean.md .claude/commands/to-vanilla-lean.md
-cp /path/to/vanilla_next/n2v/prompt_full.md .claude/commands/to-vanilla-full.md
+cp ~/Github_Dirk/vanilla_next/n2v/prompt_lean.md .claude/commands/to-vanilla-lean.md
+cp ~/Github_Dirk/vanilla_next/n2v/prompt_full.md .claude/commands/to-vanilla-full.md
 ```
 
 **Usage:** type `/to-nextjs-lean`, `/to-nextjs-full`, `/to-vanilla-lean`, or `/to-vanilla-full` inside Claude Code for that project.
@@ -116,12 +116,12 @@ Same as Option 1 but stored globally — available in every Claude Code session 
 mkdir -p ~/.claude/commands
 
 # v2n
-cp /path/to/vanilla_next/v2n/prompt_lean.md ~/.claude/commands/to-nextjs-lean.md
-cp /path/to/vanilla_next/v2n/prompt_full.md ~/.claude/commands/to-nextjs-full.md
+cp ~/Github_Dirk/vanilla_next/v2n/prompt_lean.md ~/.claude/commands/to-nextjs-lean.md
+cp ~/Github_Dirk/vanilla_next/v2n/prompt_full.md ~/.claude/commands/to-nextjs-full.md
 
 # n2v
-cp /path/to/vanilla_next/n2v/prompt_lean.md ~/.claude/commands/to-vanilla-lean.md
-cp /path/to/vanilla_next/n2v/prompt_full.md ~/.claude/commands/to-vanilla-full.md
+cp ~/Github_Dirk/vanilla_next/n2v/prompt_lean.md ~/.claude/commands/to-vanilla-lean.md
+cp ~/Github_Dirk/vanilla_next/n2v/prompt_full.md ~/.claude/commands/to-vanilla-full.md
 ```
 
 Use symlinks instead of `cp` to stay in sync with this repo automatically (see Quick Start above).
@@ -156,10 +156,10 @@ For headless use or terminal-first workflows.
 
 **Add to `~/.zshrc` or `~/.bashrc`:**
 ```bash
-alias convert-to-next-lean='cat /path/to/vanilla_next/v2n/prompt_lean.md | claude --print'
-alias convert-to-next-full='cat /path/to/vanilla_next/v2n/prompt_full.md | claude --print'
-alias convert-to-vanilla-lean='cat /path/to/vanilla_next/n2v/prompt_lean.md | claude --print'
-alias convert-to-vanilla-full='cat /path/to/vanilla_next/n2v/prompt_full.md | claude --print'
+alias convert-to-next-lean='cat ~/Github_Dirk/vanilla_next/v2n/prompt_lean.md | claude --print'
+alias convert-to-next-full='cat ~/Github_Dirk/vanilla_next/v2n/prompt_full.md | claude --print'
+alias convert-to-vanilla-lean='cat ~/Github_Dirk/vanilla_next/n2v/prompt_lean.md | claude --print'
+alias convert-to-vanilla-full='cat ~/Github_Dirk/vanilla_next/n2v/prompt_full.md | claude --print'
 ```
 
 Or as a script:
@@ -168,7 +168,7 @@ Or as a script:
 # convert.sh — usage: ./convert.sh v2n lean | v2n full | n2v lean | n2v full
 DIRECTION=${1:-v2n}
 VARIANT=${2:-lean}
-cat ~/path/to/vanilla_next/${DIRECTION}/prompt_${VARIANT}.md | claude --print > conversion_output.md
+cat ~~/Github_Dirk/vanilla_next/${DIRECTION}/prompt_${VARIANT}.md | claude --print > conversion_output.md
 echo "Done. Output written to conversion_output.md"
 ```
 
