@@ -1,24 +1,53 @@
 # vanilla_next
 
-A collection of Claude Code prompts for converting Vanilla JS apps into production-ready Next.js (App Router) projects, optimized for Vercel deployment.
+A collection of Claude Code prompts for converting web apps between Vanilla JS and Next.js — in both directions.
+
+---
+
+## Why Two Directions?
+
+### Vanilla JS → Next.js (`v2n`)
+
+Vanilla JS projects are quick to start but hit a ceiling fast: no server-side rendering, no built-in image optimisation, no analytics, manual asset pipelines, and deployment friction. Moving to Next.js + Vercel removes that ceiling and gives you production-grade infrastructure for free on the Hobby tier. Use `v2n` when you want to graduate a side-project from "it works on my machine" to a publicly shareable, Vercel-hosted app.
+
+### Next.js → Vanilla JS (`n2v`)
+
+Not every project needs a framework. If you want full control over your infrastructure, zero Node.js runtime in production, and the simplicity of serving static files from your own VPS (Hetzner, DigitalOcean, Linode…), stripping Next.js out is the right call. A flat `index.html` + `main.js` served by Nginx starts in milliseconds, costs a few euros a month, and has no cold-start, no vendor lock-in, and no surprise billing. Use `n2v` when ownership and simplicity matter more than managed infrastructure.
 
 ---
 
 ## Prompts
 
+### `v2n/` — Vanilla JS → Next.js (Vercel)
+
 | File | Purpose | Token Cost |
 |------|---------|------------|
-| [`prompt_lean.md`](./prompt_lean.md) | Quick conversion — minimal output, essentials only | Low |
-| [`prompt_full.md`](./prompt_full.md) | Thorough conversion — full architecture, step-by-step, all files | High |
+| [`v2n/prompt_lean.md`](./v2n/prompt_lean.md) | Quick conversion — minimal output, essentials only | Low |
+| [`v2n/prompt_full.md`](./v2n/prompt_full.md) | Thorough conversion — full architecture, step-by-step, all files | High |
 
-Both prompts produce:
+Both `v2n` prompts produce:
 - Next.js App Router structure (`app/`, `components/`, `public/`)
 - Mobile-safe `globals.css` with touch/scroll rules
-- Personalised `TopBanner` component (set your name and reference site in the prompt)
+- Personalised `TopBanner` component (set your name and contact URL in the prompt)
 - Pumpkin favicon via inline SVG metadata
 - `@vercel/analytics` integration (+ Vercel console enablement steps)
 - `.env.local` / `.env.example` secret management
 - `next.config.js` boilerplate
+- Updated `.gitignore` and `README.md` for the converted project
+
+### `n2v/` — Next.js → Vanilla JS (VPS / self-hosted)
+
+| File | Purpose | Token Cost |
+|------|---------|------------|
+| [`n2v/prompt_lean.md`](./n2v/prompt_lean.md) | Quick extraction — single HTML/CSS/JS output, essentials only | Low |
+| [`n2v/prompt_full.md`](./n2v/prompt_full.md) | Thorough conversion — modular JS, Nginx config, full security audit | High |
+
+Both `n2v` prompts produce:
+- Dependency-free `index.html` + `style.css` + `main.js`
+- Complete React/Next.js removal (no JSX, no build step)
+- `config.example.js` pattern for client-side runtime config (replaces `NEXT_PUBLIC_` env vars)
+- `nginx.conf.example` with static-file serving, asset caching, and security headers
+- TLS setup note (Let's Encrypt / Certbot)
 - Updated `.gitignore` and `README.md` for the converted project
 
 ---
@@ -29,15 +58,26 @@ The fastest way to use these prompts across any project is a **one-time global s
 
 ```bash
 mkdir -p ~/.claude/commands
-ln -sf /path/to/vanilla_next/prompt_lean.md ~/.claude/commands/to-nextjs-lean.md
-ln -sf /path/to/vanilla_next/prompt_full.md ~/.claude/commands/to-nextjs-full.md
+
+# v2n (Vanilla → Next.js)
+ln -sf /path/to/vanilla_next/v2n/prompt_lean.md ~/.claude/commands/to-nextjs-lean.md
+ln -sf /path/to/vanilla_next/v2n/prompt_full.md ~/.claude/commands/to-nextjs-full.md
+
+# n2v (Next.js → Vanilla)
+ln -sf /path/to/vanilla_next/n2v/prompt_lean.md ~/.claude/commands/to-vanilla-lean.md
+ln -sf /path/to/vanilla_next/n2v/prompt_full.md ~/.claude/commands/to-vanilla-full.md
 ```
 
-Then from any vanilla JS project, open Claude Code and type:
+Then from any project, open Claude Code and type:
 
 ```
+# Vanilla → Next.js
 /to-nextjs-lean    # quick conversion
 /to-nextjs-full    # thorough conversion
+
+# Next.js → Vanilla
+/to-vanilla-lean   # quick extraction
+/to-vanilla-full   # thorough conversion
 ```
 
 ---
@@ -54,11 +94,17 @@ Store the commands inside a specific project's `.claude/commands/` folder.
 
 ```bash
 mkdir -p .claude/commands
-cp /path/to/prompt_lean.md .claude/commands/to-nextjs-lean.md
-cp /path/to/prompt_full.md .claude/commands/to-nextjs-full.md
+
+# v2n
+cp /path/to/vanilla_next/v2n/prompt_lean.md .claude/commands/to-nextjs-lean.md
+cp /path/to/vanilla_next/v2n/prompt_full.md .claude/commands/to-nextjs-full.md
+
+# n2v
+cp /path/to/vanilla_next/n2v/prompt_lean.md .claude/commands/to-vanilla-lean.md
+cp /path/to/vanilla_next/n2v/prompt_full.md .claude/commands/to-vanilla-full.md
 ```
 
-**Usage:** type `/to-nextjs-lean` or `/to-nextjs-full` inside Claude Code for that project.
+**Usage:** type `/to-nextjs-lean`, `/to-nextjs-full`, `/to-vanilla-lean`, or `/to-vanilla-full` inside Claude Code for that project.
 
 ---
 
@@ -68,27 +114,36 @@ Same as Option 1 but stored globally — available in every Claude Code session 
 
 ```bash
 mkdir -p ~/.claude/commands
-cp /path/to/prompt_lean.md ~/.claude/commands/to-nextjs-lean.md
-cp /path/to/prompt_full.md ~/.claude/commands/to-nextjs-full.md
+
+# v2n
+cp /path/to/vanilla_next/v2n/prompt_lean.md ~/.claude/commands/to-nextjs-lean.md
+cp /path/to/vanilla_next/v2n/prompt_full.md ~/.claude/commands/to-nextjs-full.md
+
+# n2v
+cp /path/to/vanilla_next/n2v/prompt_lean.md ~/.claude/commands/to-vanilla-lean.md
+cp /path/to/vanilla_next/n2v/prompt_full.md ~/.claude/commands/to-vanilla-full.md
 ```
 
-Use symlinks instead of `cp` to stay in sync with this repo automatically:
-
-```bash
-ln -sf /path/to/vanilla_next/prompt_lean.md ~/.claude/commands/to-nextjs-lean.md
-ln -sf /path/to/vanilla_next/prompt_full.md ~/.claude/commands/to-nextjs-full.md
-```
+Use symlinks instead of `cp` to stay in sync with this repo automatically (see Quick Start above).
 
 ---
 
 ### Option 3 — CLAUDE.md Project Instructions
 
-Add a block to the `CLAUDE.md` of any vanilla JS project. Claude reads it automatically at session start.
+Add a block to the `CLAUDE.md` of any project. Claude reads it automatically at session start.
 
+**For a vanilla project pending Next.js conversion:**
 ```markdown
 ## Conversion Target
 This project is pending conversion to Next.js for Vercel deployment.
-When asked to convert, follow the instructions in `prompt_lean.md` (quick) or `prompt_full.md` (thorough).
+When asked to convert, follow the instructions in `v2n/prompt_lean.md` (quick) or `v2n/prompt_full.md` (thorough).
+```
+
+**For a Next.js project pending VPS extraction:**
+```markdown
+## Conversion Target
+This project is pending extraction to Vanilla JS for self-hosted VPS deployment.
+When asked to convert, follow the instructions in `n2v/prompt_lean.md` (quick) or `n2v/prompt_full.md` (thorough).
 ```
 
 Then just say *"Convert this."* — no slash command needed.
@@ -101,22 +156,20 @@ For headless use or terminal-first workflows.
 
 **Add to `~/.zshrc` or `~/.bashrc`:**
 ```bash
-alias convert-lean='cat /path/to/prompt_lean.md | claude --print'
-alias convert-full='cat /path/to/prompt_full.md | claude --print'
+alias convert-to-next-lean='cat /path/to/vanilla_next/v2n/prompt_lean.md | claude --print'
+alias convert-to-next-full='cat /path/to/vanilla_next/v2n/prompt_full.md | claude --print'
+alias convert-to-vanilla-lean='cat /path/to/vanilla_next/n2v/prompt_lean.md | claude --print'
+alias convert-to-vanilla-full='cat /path/to/vanilla_next/n2v/prompt_full.md | claude --print'
 ```
 
 Or as a script:
 ```bash
 #!/bin/bash
-# convert-to-next.sh
-PROMPT_FILE=${1:-prompt_lean}
-cat ~/path/to/vanilla_next/${PROMPT_FILE}.md | claude --print > conversion_output.md
+# convert.sh — usage: ./convert.sh v2n lean | v2n full | n2v lean | n2v full
+DIRECTION=${1:-v2n}
+VARIANT=${2:-lean}
+cat ~/path/to/vanilla_next/${DIRECTION}/prompt_${VARIANT}.md | claude --print > conversion_output.md
 echo "Done. Output written to conversion_output.md"
-```
-
-```bash
-./convert-to-next.sh prompt_lean
-./convert-to-next.sh prompt_full
 ```
 
 ---
@@ -125,7 +178,7 @@ echo "Done. Output written to conversion_output.md"
 
 Auto-inject the conversion prompt whenever you submit a message in a marked project.
 
-**`.claude/settings.json` in the target vanilla project:**
+**`.claude/settings.json` in the target project:**
 ```json
 {
   "hooks": {
@@ -143,7 +196,7 @@ Auto-inject the conversion prompt whenever you submit a message in a marked proj
 }
 ```
 
-Add a `.convert-to-next` marker file to activate. Remove it once done.
+Add a `.convert-to-next` or `.convert-to-vanilla` marker file to activate. Remove it once done.
 
 > `UserPromptSubmit` fires once per message — correct for injecting context. Do not use `PreToolUse` with a wildcard matcher; that fires on every tool call Claude makes internally.
 
@@ -151,24 +204,32 @@ Add a `.convert-to-next` marker file to activate. Remove it once done.
 
 ### Option 6 — MCP Server Tool
 
-Build a lightweight MCP server to expose the prompts as native Claude Code tools. Best for team use or when you want version-controlled prompts with logging.
+Build a lightweight MCP server to expose all four prompts as native Claude Code tools. Best for team use or when you want version-controlled prompts with logging.
 
 **`mcp-vanilla-next/index.js`:**
 ```js
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import fs from "fs";
 
-const server = new Server({ name: "vanilla-next", version: "1.0.0" });
+const server = new Server({ name: "vanilla-next", version: "2.0.0" });
+
+const PROMPTS = {
+  v2n_lean: "v2n/prompt_lean.md",
+  v2n_full: "v2n/prompt_full.md",
+  n2v_lean: "n2v/prompt_lean.md",
+  n2v_full: "n2v/prompt_full.md",
+};
 
 server.setRequestHandler("tools/list", async () => ({
-  tools: [
-    { name: "convert_lean", description: "Lean vanilla→Next.js conversion prompt" },
-    { name: "convert_full", description: "Full vanilla→Next.js conversion prompt" },
-  ],
+  tools: Object.keys(PROMPTS).map((name) => ({
+    name,
+    description: `Load the ${name.replace("_", " ")} conversion prompt`,
+  })),
 }));
 
 server.setRequestHandler("tools/call", async (req) => {
-  const file = req.params.name === "convert_lean" ? "prompt_lean.md" : "prompt_full.md";
+  const file = PROMPTS[req.params.name];
+  if (!file) throw new Error(`Unknown tool: ${req.params.name}`);
   return { content: [{ type: "text", text: fs.readFileSync(file, "utf8") }] };
 });
 ```
@@ -181,26 +242,38 @@ Register in `~/.claude/settings.json` under `mcpServers`.
 
 Trigger a conversion automatically when you push to a dedicated branch.
 
-**`.github/workflows/convert-to-next.yml`:**
+**`.github/workflows/convert.yml`:**
 ```yaml
-name: Convert to Next.js
+name: Convert Project
 on:
   push:
-    branches: [convert-to-next]
+    branches:
+      - convert-to-next
+      - convert-to-vanilla
 jobs:
   convert:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Run Claude conversion
+      - name: Detect direction and run Claude
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
           npm install -g @anthropic-ai/claude-code
-          cat prompt_lean.md | claude --print > conversion_output.md
+          BRANCH="${GITHUB_REF##*/}"
+          if [ "$BRANCH" = "convert-to-next" ]; then
+            PROMPT="v2n/prompt_lean.md"
+          else
+            PROMPT="n2v/prompt_lean.md"
+          fi
+          cat "$PROMPT" | claude --print > conversion_output.md
+      - uses: actions/upload-artifact@v4
+        with:
+          name: conversion-output
+          path: conversion_output.md
 ```
 
-Push your vanilla project to the `convert-to-next` branch and the output lands as an artifact.
+Push to `convert-to-next` or `convert-to-vanilla` and the output lands as a downloadable artifact.
 
 ---
 
@@ -220,11 +293,18 @@ Push your vanilla project to the `convert-to-next` branch and the output lands a
 
 ## Notes
 
-### Personalising the TopBanner
-Both prompts include a `[YOUR_NAME]` and `[YOUR_REFERENCE_SITE]` placeholder in the TopBanner instructions. Replace these in the prompt files before running a conversion, or edit the generated component directly afterwards.
+### Personalising the TopBanner (v2n)
+Both `v2n` prompts include `[YOUR_NAME]` and `[YOUR_CONTACT_URL]` placeholders in the TopBanner instructions. Replace these in the prompt files before running a conversion, or edit the generated component directly afterwards.
 
-### `api/` Route Handlers
-The `prompt_full.md` prompt lists `app/api/` as optional. Omit it unless the app requires server-side logic (proxying secrets, webhook receivers, server-sent events). When listed unnecessarily, models sometimes generate empty placeholder files.
+### `api/` Route Handlers (v2n)
+The `v2n/prompt_full.md` prompt lists `app/api/` as optional. Omit it unless the app requires server-side logic (proxying secrets, webhook receivers, server-sent events). When listed unnecessarily, models sometimes generate empty placeholder files.
+
+### Server-side Secrets (n2v)
+If the original Next.js app used API route handlers that consumed private secrets, those secrets cannot live in a static Vanilla JS build. The `n2v/prompt_full.md` prompt generates a stub `server.js` and documents this clearly. A lightweight sidecar (Express, Cloudflare Worker, or serverless function) is required for those endpoints.
+
+### Choosing lean vs full
+- **lean** — fast, low token cost, best when the codebase is small or the conversion is straightforward.
+- **full** — thorough, higher token cost, best for larger apps, team handoffs, or when you want a polished README and complete security audit.
 
 ---
 
